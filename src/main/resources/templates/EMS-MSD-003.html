@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>Welcome to Our Site</title>
+<script type="text/javascript">
+	
+</script>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="card-header">
+			<h4 class="card-title">Department List</h4>
+		</div>
+		<div class="row">
+			<div class="col-md-6"></div>
+			<label style="color: blue;" th:text="${msg}"></label>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<a href="/setupadddepartment" style="margin-left: 40px;" class="btn btn-round btn-primary">Add Department</a>
+				</div>
+			</div>
+
+
+
+			<div class="col-md-4">
+				<form action="/displaydepartment" method="get" th:object="${bean}">
+				
+					<div class="input-group no-border" style="padding-top: 10px;">
+						<input type="text" class="form-control" placeholder="Search..."
+							th:field="*{id}">
+						<div class="input-group-append">
+    <button type="submit" class="btn-primary fa fa-search" style="border-color:lightgrey;width:45px;border-bottom-right-radius: 20px; border-top-right-radius: 20px;" id="basic-addon2">Go</button>
+  </div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-2 ">
+			<a th:href="@{/displaydepartment}">
+				<input class="btn btn-round btn-primary" type="reset"></a>
+			</div>
+		</div>
+
+
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead class=" text-primary"><tr>
+						<th>ID</th>
+						<th>Department Name</th>
+						<th>Department Head</th>
+						<th>Address</th>
+						<th style="padding-left:60px;">Action</th></tr>
+					</thead>
+					<tbody th:each="data: ${departmentlist}">
+					
+						<tr th:if="${data.status==true}">
+							<td   th:text="${data.id}" />
+														<td  th:unless="${data.status==true}" />
+							
+							<td th:text="${data.name}" />
+							<td  th:text="${data.head}" />
+							<td  th:text="${data.loc}" />
+							<td>
+								<a th:href="@{/setupdepartmentupdate(id=${data.id})}"><input type="button" value="Update" class="btn btn-round btn-primary" id="Update" /></a>
+								<a th:href="@{/departmentdelete(id=${data.id})}"><input type="button"	onclick="return confirm('Are you sure to delete?');" value="Delete" id="delete" class="btn btn-round btn-primary" /></a>
+							</td>
+						</tr>
+					</tbody>
+					
+				</table>
+			</div>
+		</div>
+
+	<div th:if="${totalPages>1}">
+
+
+ <nav>
+<ul class="pagination pagination-md justify-content-center">
+<!--  <li class="page-item" style="font-weight:bold;color:orangered;padding-top:9px;padding-right:20px;"> Total Rows : [[${totalElements}]]</li> -->
+<li class="page-item">
+<div th:if="${id}==null">
+<a class="page-link active" th:if="${currentPage>1}" aria-label="Previous" th:href="@{'/displaydepartment/page/1' }">First</a>
+</div><div th:if="${id}!=null">
+<a class="page-link active" th:if="${currentPage>1}" aria-label="Previous" th:href="@{'/displaydepartment/searchpage/1' +'?id='+${id}}">First</a>
+</div>
+<span class="page-link" th:unless="${currentPage>1}">First</span>
+</li>
+<li class="page-item">
+<div th:if="${id}==null">
+<a class="page-link active"  th:if="${currentPage>1}" aria-label="Previous" th:href="@{'/displaydepartment/page/'+${currentPage-1}}">Previous</a>
+</div><div th:if="${id}!=null"><a class="page-link active"  th:if="${currentPage>1}" aria-label="Previous" th:href="@{'/displaydepartment/searchpage/'+${currentPage-1}+'?id='+${id}}">Previous</a>
+</div> 
+<span class="page-link" th:unless="${currentPage>1}">Previous</span>
+
+</li>
+<li class="page-item">
+<div class="page-link active" style="border-color: orangered;color:white; background-color: orangered;" >[[${currentPage}]]</div>
+</li>
+
+<li class="page-item">
+
+<div th:if="${id}!=null">
+<a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displaydepartment/searchpage/'+${currentPage+1}+'?id='+${id}}">Next</a>
+</div>
+<div th:if="${id}==null">
+<a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displaydepartment/page/'+${currentPage+1}}">Next</a>
+</div>
+
+
+<span class="page-link" th:unless="${currentPage<totalPages}">Next</span>
+
+</li>
+<li class="page-item">
+<div th:if="${id}==null">
+<a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displaydepartment/page/'+${totalPages}}">Last</a>
+</div><div th:if="${id}!=null"><a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displaydepartment/searchpage/'+${totalPages}+'?id='+${id}}">Last</a>
+</div><span class="page-link" th:unless="${currentPage<totalPages}">Last</span>
+
+</li>
+</ul>
+</nav>
+</div>
+</div>
+	
+	
+
+</body>
+</html>

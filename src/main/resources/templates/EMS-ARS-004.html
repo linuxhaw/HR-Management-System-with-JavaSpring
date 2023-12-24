@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>Welcome to Our Site</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style>
+#pin {
+	font-size: 17px;
+}
+
+#span {
+	color: rgb(255, 81, 0);
+	font-size: 20px;
+}
+</style>
+
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="card-header">
+			<h5 class="title">Staff Report</h5>
+		</div>
+		<div class="card-body">
+			<form action="updatestaff" method="post" th:object="${bean}">
+				<div class="typography-line">
+					<span id="span">Staff ID-</span>
+					
+					<p id="pin" th:text="${bean.id}" />
+				
+				</div>
+				<div class="typography-line">
+					<span id="span">Name-</span>
+					<p id="pin" th:text="*{name}" />
+				</div>
+				<div class="typography-line">
+					<span id="span">Password-</span>
+					<p id="pin" th:text="*{password}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">NRC-</span>
+					<p id="pin" th:text="*{nrc}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Email-</span>
+					<p id="pin" th:text="*{email}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Phone-</span>
+					<p id="pin" th:text="*{phone}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Salary-</span>
+					<p id="pin" th:text="*{salary}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Bank Acc-</span>
+					<p id="pin" th:text="*{bankAcc}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Bank-</span>
+					<p id="pin" th:text="*{bank.bnkname}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Address-</span>
+					<p id="pin" th:text="*{address}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Birthday-</span>
+					<p id="pin" th:text="*{birthday}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">REGISTER DATE-</span>
+					<p id="pin" th:text="*{register}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Gender-</span>
+					<p id="pin" th:text="*{gender}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Marrage Status-</span>
+					<p id="pin" th:text=*{marrage}></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">RELGION-</span>
+					<p id="pin" th:text="*{religion}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">NATIONALITY-</span>
+					<p id="pin" th:text="*{nation}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span" >Certificate-</span>
+					<p id="pin" th:each="c:${bean.certify}"  th:text="${c.name}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Qualification-</span>
+					<p  id="pin" th:each="q:${bean.qualify}" th:text="${q.qulname}"></p>
+				</div>
+				<div class="typography-line">
+					<span id="span">Position-</span>
+					
+					<p id="pin" th:text="*{position.posname}"></p>
+					
+				</div>
+				<div class="typography-line">
+					<span id="span">Department-</span>
+					
+	            	<p id="pin" th:text="*{department.name}"></p>
+						
+				</div>
+				<div class="typography-line">
+					<span id="span">Account Role-</span>
+					<p id="pin" th:text="*{role.rolname}"></p>
+				</div>
+				
+				
+				<div class="typography-line">
+					<span id="span">Job Status-</span>
+					<p id="pin">BlackList</p>
+				</div>
+				
+				
+				<div class="row" align="Center">
+					<div class="col-md-2">
+						<div class="form-group">
+
+							<td class="text-center">
+							<td><a href="displayreportstaff"><input type="button"
+									value="Return" class="btn btn-round btn-primary"></a></td>
+
+						</div>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>Welcome to Our Site</title>
+
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="card-header">
+			<h4 class="card-title">Role List</h4>
+		</div>
+		<div class="row">
+			<div class="col-md-6"></div>
+			<label  th:text="${msg}"></label>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<a href="/setupaddrole" style="margin-left: 40px;"
+
+						class="btn btn-round btn-primary">Add Role</a>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<form action="/displayrole" method="get" th:object="${bean}">
+				
+					<div class="input-group no-border" style="padding-top: 10px;" >
+					
+							<div class="input-group mb-3">
+  <input type="text" class="form-control" th:field="*{id}" placeholder="Search...." aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+    <button type="submit" class="btn-primary fa fa-search" 
+    style="border-color:lightgrey;width:50px;border-bottom-right-radius: 20px; 
+    border-top-right-radius: 20px;" id="basic-addon2">Go</button>
+  </div>
+</div>
+				</div>
+<!-- 	Clear the text in serach box				<input class="btn btn-round btn-primary" value="clear" type="reset"> -->
+				</form>
+			</div>
+			<div class="col-md-2 ">
+			<a th:href="@{/displayrole}">
+				<input class="btn btn-round btn-primary" type="reset"></a>
+			</div>
+		</div>
+
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead class=" text-primary"><tr>
+						<th>ID</th>
+						<th>Role Name</th>
+						<th style="padding-left:70px;">Action</th>
+</tr>
+					</thead>
+					<tbody>
+						<tr th:each="role: ${rolelist}">
+							<td th:text="${role.rolid}" />
+							<td th:text="${role.rolname}" />
+							<td>
+								<a th:href="@{/setuproleupdate(id=${role.rolid})}"><input type="button" value="Update" class="btn btn-round btn-primary" id="roleUpdate" /></a>
+								<a th:href="@{/roledelete(id=${role.rolid})}"><input type="button"	onclick="return confirm('Are you sure to delete?');" value="Delete" id="delete" class="btn btn-round btn-primary" /></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			</div>
+<div th:if="${totalPages>1}">
+
+
+ <nav>
+<ul class="pagination pagination-md justify-content-center">
+<!--  <li class="page-item" style="font-weight:bold;color:orangered;padding-top:9px;padding-right:20px;"> Total Rows : [[${totalElements}]]</li> -->
+<li class="page-item">
+<div th:if="${id}==null">
+<a class="page-link active" th:if="${currentPage>1}" aria-label="Previous" th:href="@{'/displayrole/page/1' }">First</a>
+</div><div th:if="${id}!=null">
+<a class="page-link active" th:if="${currentPage>1}" aria-label="Previous" th:href="@{'/displayrole/searchpage/1' +'?id='+${id}}">First</a>
+</div>
+<span class="page-link" th:unless="${currentPage>1}">First</span>
+</li>
+<li class="page-item">
+<div th:if="${id}==null">
+<a class="page-link active"  th:if="${currentPage>1}" aria-label="Previous" th:href="@{'/displayrole/page/'+${currentPage-1}}">Previous</a>
+</div><div th:if="${id}!=null"><a class="page-link active"  th:if="${currentPage>1}" aria-label="Previous" th:href="@{'/displayrole/searchpage/'+${currentPage-1}+'?id='+${id}}">Previous</a>
+</div>
+<span class="page-link" th:unless="${currentPage>1}">Previous</span>
+
+</li>
+<li class="page-item">
+<div class="page-link active" style="border-color: orangered;color:white; background-color: orangered;" >[[${currentPage}]]</div>
+</li>
+
+<li class="page-item">
+
+<!-- <a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displayrole/page/'+${currentPage+1}}">Next</a> -->
+<div th:if="${id}!=null">
+<a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displayrole/searchpage/'+${currentPage+1}+'?id='+${id}}">Next</a>
+</div>
+<div th:if="${id}==null">
+<a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displayrole/page/'+${currentPage+1}}">Next</a>
+</div>
+
+
+<span class="page-link" th:unless="${currentPage<totalPages}">Next</span>
+
+</li>
+<li class="page-item">
+<div th:if="${id}==null">
+<a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displayrole/page/'+${totalPages}}">Last</a>
+</div><div th:if="${id}!=null"><a class="page-link active"  th:if="${currentPage<totalPages}" aria-label="Previous" th:href="@{'/displayrole/searchpage/'+${totalPages}+'?id='+${id}}">Last</a>
+</div><span class="page-link" th:unless="${currentPage<totalPages}">Last</span>
+
+</li>
+</ul>
+</nav>
+</div>
+		</div>
+
+
+</body>
+</html>
